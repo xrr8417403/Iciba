@@ -14,8 +14,8 @@ class IcibaSpider(scrapy.Spider):
     start_urls = ["http://word.iciba.com/"]
 
     def parse(self,response):
-        for category_url in response.css("div.main_l #mainwordlist>li[has_child=0]"):
-            #if category_url.css("[li[has_child]=1"):
+        for category_url in response.css("div.main_l #mainwordlist > li[has_child]"):
+            has_child = category_url.css("::attr(has_child)").extract_first()
             header = category_url.css("h3::text").extract_first()
             count = category_url.css('p::text').extract_first()
-            print("%s=======================>%s"%(header,count))
+            print("%s=======================>%s"%(header,count),has_child)
